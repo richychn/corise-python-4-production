@@ -111,9 +111,9 @@ class DataReader:
             'Country': 'Russia',
         }
         """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+    
+        for row in open(self._fp, 'r'):
+            yield {col: val for col, val in zip(self._col_names, row.split(self._sep))}
 
     def get_file_path(self):
         return self._fp

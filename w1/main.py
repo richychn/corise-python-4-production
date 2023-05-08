@@ -43,9 +43,15 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
         'United States': 121.499
     }
     """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+    data_reader_gen = (row for row in dp.data_reader)
+    _ = next(data_reader_gen)
+    aggs = {}
+    for row in tqdm(data_reader_gen):
+        if row['Country'] in aggs.values():
+            aggs[row['Country']] += dp.to_float(row['TotalPrice'])
+        else:
+            aggs[row['Country']] = dp.to_float(row['TotalPrice'])
+    return aggs
 
 
 def get_sales_information(file_path: str) -> Dict:
