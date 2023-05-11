@@ -47,7 +47,7 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     _ = next(data_reader_gen)
     aggs = {}
     for row in tqdm(data_reader_gen):
-        if row['Country'] in aggs.values():
+        if row['Country'] in aggs.keys():
             aggs[row['Country']] += dp.to_float(row['TotalPrice'])
         else:
             aggs[row['Country']] = dp.to_float(row['TotalPrice'])
