@@ -41,9 +41,7 @@ async def get() -> Dict:
     {"status": "ok"}
     """
 
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+    return {"status": "ok"}
 
 
 # Below endpoint renders an HTML page
@@ -52,9 +50,10 @@ async def get() -> HTMLResponse:
     """
     should render the HTML file - index.html when a user goes to http://127.0.0.1:8000/
     """
-    ######################################## YOUR CODE HERE ##################################################
+    with open('index.html', 'r') as f:
+        html = f.read()
 
-    ######################################## YOUR CODE HERE ##################################################
+    return HTMLResponse(html)
 
 
 # Below endpoint to get the initial data
@@ -63,6 +62,14 @@ async def get() -> List[ProcessStatus]:
     """
     Get all the records from the process table and return it using the pydantic model ProcessStatus
     """
-    ######################################## YOUR CODE HERE ##################################################
-
-    ######################################## YOUR CODE HERE ##################################################
+    database = DB()
+    data = database.read_all()
+    return [ProcessStatus(
+        process_id=row['process_id'],
+        file_name=row['file_name'],
+        file_path=row['file_path'],
+        description=row['description'],
+        start_time=row['start_time'],
+        end_time=row['end_time'],
+        percentage=row['percentage']
+        ) for row in data]
