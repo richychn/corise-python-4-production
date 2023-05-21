@@ -164,7 +164,7 @@ def main() -> List[Dict]:
     batches = batch_files(file_paths=file_paths, n_processes=n_processes)
 
     ######################################## YOUR CODE HERE ##################################################
-    with multiprocessing.Pool(processes=2) as pool:
+    with multiprocessing.Pool(processes=n_processes) as pool:
         results = pool.starmap(run, [(list(batch), i) for i, batch in enumerate(batches)])
         pool.close()
         pool.join()
