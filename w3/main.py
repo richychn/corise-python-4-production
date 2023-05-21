@@ -103,7 +103,7 @@ def main() -> List[Dict]:
     Use the `run` method to fetch revenue data for a given batch of files
 
     Use multiprocessing module to process batches of data in parallel
-    Check `multiprocessing.Pool` and `pool.starmap` methods to help you wit the task
+    Check `multiprocessing.Pool` and `pool.starmap` methods to help you with the task
 
     At the end check the overall time taken in this code vs the time taken in W1 code
 
@@ -164,14 +164,17 @@ def main() -> List[Dict]:
     batches = batch_files(file_paths=file_paths, n_processes=n_processes)
 
     ######################################## YOUR CODE HERE ##################################################
-
+    with multiprocessing.Pool(processes=2) as pool:
+        results = pool.starmap(run, [(list(batch), i) for i, batch in enumerate(batches)])
+        pool.close()
+        pool.join()
     ######################################## YOUR CODE HERE ##################################################
 
-    en = time.time()
-    print("Overall time taken : {}".format(en-st))
+        en = time.time()
+        print("Overall time taken : {}".format(en-st))
 
-    # should return revenue data
-    return [{}]
+        # should return revenue data
+        return results
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+import time
 import constants
 from w1.data_processor import DataProcessor
 from pprint import pprint
@@ -70,6 +71,8 @@ def get_sales_information(file_path: str) -> Dict:
 
 
 def main():
+    st = time.time()
+
     parser = argparse.ArgumentParser(description="Choose from one of these : [tst|sml|bg]")
     parser.add_argument('--type',
                         default='tst',
@@ -87,7 +90,10 @@ def main():
     file_paths = [os.path.join(data_folder_path, file_name) for file_name in files]
     revenue_data = [get_sales_information(file_path)
                     for file_path in file_paths]
-
+    
+    en = time.time()
+    print("Overall time taken : {}".format(en-st))
+    
     pprint(revenue_data)
 
     for yearly_data in revenue_data:
